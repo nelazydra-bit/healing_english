@@ -310,7 +310,7 @@ async def main():
         elif answer==0:
             ques+=1
         return ques
-
+    ques=0
 
 #main programe
     run=True
@@ -327,82 +327,74 @@ async def main():
         key=pygame.key.get_pressed()
         screen.fill((0,0,0))
     #hiển thị
-        screen.blit(sky,(0,0))
-        screen.blit(sky_land,(300 + oject_x,100))
-    
-        screen.blit(way1,(oject_x,0))
-        screen.blit(way2,(oject_x+1500,0))
-        screen.blit(tree,(500 + oject_x,0))
-        screen.blit(note2,(1800 + oject_x,550))
-    
-        screen.blit(NPC,(NPC_x,200))
-        screen.blit(stopper,(stopper_x,435))
-        screen.blit(home1,(oject_x,0))
-        screen.blit(note1,(150 + oject_x,550))
-        screen.blit(note4,(2400 + oject_x,550))
-
-        if key[pygame.K_j]:
-            player,player_x,
-            player,player_x,player_x_no_move,oject_x,stopper_x=player_move_right(player,player_x,key,player_x_no_move,oject_x,stopper_x)
-        
-    
-        elif key[pygame.K_f]:
-            player,player_x,player_x_no_move,oject_x,home_x=player_move_left(player,player_x,key,player_x_no_move,oject_x,home_x)
-        screen.blit(player,(player_x,535))
-        screen.blit(home2,(oject_x,0))
-        screen.blit(way3,(oject_x,20))
-        screen.blit(way4,(oject_x+1500,20))
-
         if player_x==home_x:
-            run=True
-            runing=-1
-            ques=0
-            while run:
-            
-                screen.fill((250,250,250))
-                if ques==0:
-                    ques=0
-                    answer_apear(oder_answer_list1)
-                    ques=choose_answer2(answer1,wrong_mode2,ques)
+            mode2=1
+            screen.fill((250,250,250))
+            if ques==0:
+                ques=0
+                answer_apear(oder_answer_list1)
+                ques=choose_answer2(answer1,wrong_mode2,ques)
                 
         
-                elif ques==1:
-                    question1=(pygame.image.load('question2.jpg').convert_alpha())
-                    question1=pygame.transform.scale(question1,(550,SCREEN_HEIGHT))
-                    question1.set_colorkey((0,0,0))
-                    answer_apear(oder_answer_list2)
-                    ques=choose_answer2(answer2,wrong_mode2,ques)
+            elif ques==1:
+                question1=(pygame.image.load('question2.jpg').convert_alpha())
+                question1=pygame.transform.scale(question1,(550,SCREEN_HEIGHT))
+                question1.set_colorkey((0,0,0))
+                answer_apear(oder_answer_list2)
+                ques=choose_answer2(answer2,wrong_mode2,ques)
         
-                elif ques==2:
-                    question1=(pygame.image.load('question3.jpg').convert_alpha())
-                    question1=pygame.transform.scale(question1,(550,SCREEN_HEIGHT))
-                    question1.set_colorkey((0,0,0))
-                    answer_apear(oder_answer_list3)
-                    ques=choose_answer2(answer3,wrong_mode2,ques)
-                elif ques==3:
+            elif ques==2:
+                question1=(pygame.image.load('question3.jpg').convert_alpha())
+                question1=pygame.transform.scale(question1,(550,SCREEN_HEIGHT))
+                question1.set_colorkey((0,0,0))
+                answer_apear(oder_answer_list3)
+                ques=choose_answer2(answer3,wrong_mode2,ques)
+            elif ques==3:
+                mode2=0
+                player_x=700
+            screen.blit(question1,(0,0))
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     run= False
-                    player_x=700
-                screen.blit(question1,(0,0))
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        run= False
-                        runing=0
-                
+                    runing=0
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if ques == 0:
+                        answer1 = choose_answer1(oder_answer_list1, choose, answer1 )
+                    elif ques == 1:
+                        answer2 = choose_answer1(oder_answer_list2, choose, answer2)
+                    elif ques == 2:
+                        answer3 = choose_answer1(oder_answer_list3, choose, answer3)
+        else:
+            mode2=0
+        if mode2==0:
+            screen.blit(sky,(0,0))
+            screen.blit(sky_land,(300 + oject_x,100))
     
+            screen.blit(way1,(oject_x,0))
+            screen.blit(way2,(oject_x+1500,0))
+            screen.blit(tree,(500 + oject_x,0))
+            screen.blit(note2,(1800 + oject_x,550))
+    
+            screen.blit(NPC,(NPC_x,200))
+            screen.blit(stopper,(stopper_x,435))
+            screen.blit(home1,(oject_x,0))
+            screen.blit(note1,(150 + oject_x,550))
+            screen.blit(note4,(2400 + oject_x,550))
 
-                    elif event.type == pygame.MOUSEBUTTONDOWN:
-                        if ques == 0:
-                            answer1 = choose_answer1(oder_answer_list1, choose, answer1 )
-                        elif ques == 1:
-                            answer2 = choose_answer1(oder_answer_list2, choose, answer2)
-                        elif ques == 2:
-                            answer3 = choose_answer1(oder_answer_list3, choose, answer3)
-                pygame.display.flip()
+            if key[pygame.K_j]:
+                player,player_x,
+                player,player_x,player_x_no_move,oject_x,stopper_x=player_move_right(player,player_x,key,player_x_no_move,oject_x,stopper_x)
+        
+    
+            elif key[pygame.K_f]:
+                player,player_x,player_x_no_move,oject_x,home_x=player_move_left(player,player_x,key,player_x_no_move,oject_x,home_x)
+            screen.blit(player,(player_x,535))
+            screen.blit(home2,(oject_x,0))
+            screen.blit(way3,(oject_x,20))
+            screen.blit(way4,(oject_x+1500,20))
 
-            if runing==0:
-                pygame.quit()
-            else:
-                run=True   
+
+
 
         if key[pygame.K_r]:
             player_x=700
