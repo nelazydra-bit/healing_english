@@ -107,6 +107,8 @@ async def main():
     question1=(pygame.image.load('question1.jpg').convert_alpha())
     question1=pygame.transform.scale(question1,(550,SCREEN_HEIGHT))
     question1.set_colorkey((0,0,0))
+#hiển thị mode 2
+    mode2=0
 #câu hỏi 1
     answer1_true=[pygame.image.load('answer_true.png').convert_alpha(),True]
     answer1_true[0]=pygame.transform.scale(answer1_true[0],(400,200))
@@ -161,13 +163,14 @@ async def main():
     wrong_mode1.set_colorkey((0,0,0))
 
     def sort_answer(answer_list):
-        choices = list(answer_list)
-        ordered_list = []
-        while choices:
-            next_choice = random.choice(choices)
-            ordered_list.append(next_choice)
-            choices.remove(next_choice)
-        return ordered_list
+        another_list=answer_list
+        oder_answer_list=[]
+        for i in range(len(another_list)):
+            oder_number=random.choice(answer_list)
+            oder_answer_list.append(oder_number)
+            another_list.remove(oder_number)
+        
+        return oder_answer_list
 
 
     def player_move_right(player,player_x,key,player_x_no_move,oject_x,stopper_x):
@@ -245,22 +248,58 @@ async def main():
         screen.blit(D,(900,325))
 
 
-    def choose_answer_duty1(oder_answer_list, choose, answer, mouse_pos):
-        positions = [(300, 75), (900, 75), (300, 325), (900, 325)]
-        for index, option in enumerate(oder_answer_list):
-            rect = option[0].get_rect(topleft=positions[index])
-            if rect.collidepoint(mouse_pos):
-                choose = option
-                return 0 if option[1] else 1
+    def choose_answer_duty1(oder_answer_list,choose,answer):
+        if oder_answer_list[0][0].get_rect(topleft=(300, 75)).collidepoint(event.pos):
+            choose=oder_answer_list[0]
+            if oder_answer_list[0][1]:
+                answer=0
+            else:
+                answer=1
+        if oder_answer_list[1][0].get_rect(topleft=(900, 75)).collidepoint(event.pos):
+            choose=oder_answer_list[0]
+            if oder_answer_list[1][1]:
+                answer=0
+            else:
+                answer=1
+        if oder_answer_list[2][0].get_rect(topleft=(300, 325)).collidepoint(event.pos):
+            choose=oder_answer_list[0]
+            if oder_answer_list[2][1]:
+                answer=0
+            else:
+                answer=1
+        if oder_answer_list[3][0].get_rect(topleft=(900, 325)).collidepoint(event.pos):
+            choose=oder_answer_list[0]
+            if oder_answer_list[3][1]:
+                answer=0
+            else:
+                answer=1
         return answer
 
-    def choose_answer1(oder_answer_list, choose, answer, mouse_pos):
-        positions = [(600, 75), (1000, 75), (600, 325), (1000, 325)]
-        for index, option in enumerate(oder_answer_list):
-            rect = option[0].get_rect(topleft=positions[index])
-            if rect.collidepoint(mouse_pos):
-                choose = option
-                return 0 if option[1] else 1
+    def choose_answer1(oder_answer_list,choose,answer):
+        if oder_answer_list[0][0].get_rect(topleft=(600,75)).collidepoint(event.pos):
+            choose=oder_answer_list[0]
+            if oder_answer_list[0][1]:
+                answer=0
+            else:
+                answer=1
+        if oder_answer_list[1][0].get_rect(topleft=(1000,75)).collidepoint(event.pos):
+            choose=oder_answer_list[0]
+            if oder_answer_list[1][1]:
+                answer=0
+            else:
+                answer=1
+        if oder_answer_list[2][0].get_rect(topleft=(600,325)).collidepoint(event.pos):
+            choose=oder_answer_list[0]
+            if oder_answer_list[2][1]:
+                answer=0
+            else:
+                answer=1
+        if oder_answer_list[3][0].get_rect(topleft=(1000,325)).collidepoint(event.pos):
+            choose=oder_answer_list[0]
+            if oder_answer_list[3][1]:
+                answer=0
+            else:
+                answer=1
         return answer
 
 
@@ -321,63 +360,145 @@ async def main():
         screen.blit(player,(player_x,535))
         screen.blit(home2,(oject_x,0))
         screen.blit(way3,(oject_x,20))
-        screen.blit(way4,(oject_x+1500,20))
-
-    #phần tích hợp mode2
-        if player_x==home_x:
-            run=True
-            runing=-1
-            ques=0
-            while run:
-            
-                screen.fill((250,250,250))
-                if ques==0:
-                    ques=0
-                    answer_apear(oder_answer_list1)
-                    ques=choose_answer2(answer1,wrong_mode2,ques)
-                
-        
-                elif ques==1:
-                    question1=(pygame.image.load('question2.jpg').convert_alpha())
-                    question1=pygame.transform.scale(question1,(550,SCREEN_HEIGHT))
-                    question1.set_colorkey((0,0,0))
-                    answer_apear(oder_answer_list2)
-                    ques=choose_answer2(answer2,wrong_mode2,ques)
-        
-                elif ques==2:
-                    question1=(pygame.image.load('question3.jpg').convert_alpha())
-                    question1=pygame.transform.scale(question1,(550,SCREEN_HEIGHT))
-                    question1.set_colorkey((0,0,0))
-                    answer_apear(oder_answer_list3)
-                    ques=choose_answer2(answer3,wrong_mode2,ques)
-                elif ques==3:
-                    run= False
-                    player_x=700
-                screen.blit(question1,(0,0))
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        run= False
-                        runing=0
-                
-    
-
-                    elif event.type == pygame.MOUSEBUTTONDOWN:
-                        if ques == 0:
-                            answer1 = choose_answer1(oder_answer_list1, choose, answer1, event.pos)
-                        elif ques == 1:
-                            answer2 = choose_answer1(oder_answer_list2, choose, answer2, event.pos)
-                        elif ques == 2:
-                            answer3 = choose_answer1(oder_answer_list3, choose, answer3, event.pos)
-                pygame.display.flip()
-
-            if runing==0:
-                pygame.quit()
-            else:
-                run=True    
+        screen.blit(way4,(oject_x+1500,20)) 
 
         if key[pygame.K_r]:
             player_x=700
             oject_x=0
+            
+        if home_x==player_x:
+            mode2=1
+            run=False
+#phần nhiệm vụ
+        if key[pygame.K_q]:
+            if not q_pressed:
+                if abs(NPC_x - player_x) <= 400:
+                    duty += 1
+                q_pressed = True
+        else:
+            q_pressed = False
+        if duty == 0:
+            duty_box = pygame.image.load('duty_box1.jpg').convert_alpha()
+            duty_box = pygame.transform.scale(duty_box, (SCREEN_WIDTH,SCREEN_HEIGHT-200))
+            duty_box.set_colorkey((0,0,0))
+        elif duty == 1:
+            duty_box = pygame.image.load('duty_box2.jpg').convert_alpha()
+            duty_box = pygame.transform.scale(duty_box, (SCREEN_WIDTH,SCREEN_HEIGHT-200))
+            duty_box.set_colorkey((0,0,0))
+        elif duty==2:
+        #DIEU CHINH
+            answer_duty_apear(oder_answer_duty_list)
+            screen.blit(note3,(460,100))
+            duty=choose_answer_duty2(answer, wrong_mode1,duty)
+
+        #answer=choose_answer1(oder_answer_list,choose,answer)
+        #answer_apear(oder_answer_list)
+        #for event in pygame.event.get():
+            #if event.type==pygame.MOUSEBUTTONDOWN:
+                #answer=choose_answer1(oder_answer_list,choose,answer)
+        #choose_answer2(answer,congratulation,wrong)
+        elif duty==3:
+                duty=2
+        elif duty == 4:
+            duty_box = pygame.image.load('duty_box3.jpg').convert_alpha()
+            duty_box = pygame.transform.scale(duty_box, (SCREEN_WIDTH,SCREEN_HEIGHT-200))
+            duty_box.set_colorkey((0,0,0))
+    
+        if duty >= 0:
+            if duty<=4:
+                screen.blit(duty_box, (0, 200))
+        pygame.display.flip()
+
+    
+     
+    
+    #DIEU CHINH
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and duty == 2:
+                answer = choose_answer_duty1(oder_answer_duty_list, choose, answer)
+#mode 2
+    if mode2==1:
+        running=True
+    else:
+        running=False
+    while running:
+        screen.fill((250,250,250))
+        if ques==0:
+            answer_apear(oder_answer_list1)
+            ques=choose_answer2(answer1,wrong,ques)
+            answer1=-1
+        
+        elif ques==1:
+            question1=(pygame.image.load('question2.jpg').convert_alpha())
+            question1=pygame.transform.scale(question1,(550,SCREEN_HEIGHT))
+            question1.set_colorkey((0,0,0))
+            answer_apear(oder_answer_list2)
+            ques=choose_answer2(answer2,wrong,ques)
+        
+        elif ques==2:
+            question1=(pygame.image.load('question3.jpg').convert_alpha())
+            question1=pygame.transform.scale(question1,(550,SCREEN_HEIGHT))
+            question1.set_colorkey((0,0,0))
+            answer_apear(oder_answer_list3)
+            ques=choose_answer2(answer3,wrong,ques)
+        elif ques==3:
+            running=False
+            run=True
+        screen.blit(question1,(0,0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if ques == 0:
+                    answer1 = choose_answer1(oder_answer_list1, choose, answer1)
+                elif ques == 1:
+                    answer2 = choose_answer1(oder_answer_list2, choose, answer2)
+                elif ques == 2:
+                    answer3 = choose_answer1(oder_answer_list3, choose, answer3)
+        pygame.display.flip()
+        
+
+#DIEU CHINH
+    while run:
+        NPC_x=oject_x+2000
+        stopper_x=oject_x+2500
+        home_x=oject_x
+        key=pygame.key.get_pressed()
+        screen.fill((0,0,0))
+    #hiển thị
+        screen.blit(sky,(0,0))
+        screen.blit(sky_land,(300 + oject_x,100))
+    
+        screen.blit(way1,(oject_x,0))
+        screen.blit(way2,(oject_x+1500,0))
+        screen.blit(tree,(500 + oject_x,0))
+        screen.blit(note2,(1800 + oject_x,550))
+    
+        screen.blit(NPC,(NPC_x,200))
+        screen.blit(stopper,(stopper_x,435))
+        screen.blit(home1,(oject_x,0))
+        screen.blit(note1,(150 + oject_x,550))
+        screen.blit(note4,(2400 + oject_x,550))
+
+        if key[pygame.K_j]:
+            player,player_x,
+            player,player_x,player_x_no_move,oject_x,stopper_x=player_move_right(player,player_x,key,player_x_no_move,oject_x,stopper_x)
+        
+    
+        elif key[pygame.K_f]:
+            player,player_x,player_x_no_move,oject_x,home_x=player_move_left(player,player_x,key,player_x_no_move,oject_x,home_x)
+        screen.blit(player,(player_x,535))
+        screen.blit(home2,(oject_x,0))
+        screen.blit(way3,(oject_x,20))
+        screen.blit(way4,(oject_x+1500,20)) 
+
+        if key[pygame.K_r]:
+            player_x=700
+            oject_x=0
+        
 #phần nhiệm vụ
         if key[pygame.K_q]:
             if not q_pressed:
@@ -425,14 +546,11 @@ async def main():
             if event.type == pygame.QUIT:
                 run = False
             elif event.type == pygame.MOUSEBUTTONDOWN and duty == 2:
-                answer = choose_answer_duty1(oder_answer_duty_list, choose, answer, event.pos)
-
-    #for event in pygame.event.get():
-        #if event.type==pygame.QUIT:
-            #run=False
-        
-        
+                answer = choose_answer_duty1(oder_answer_duty_list, choose, answer)
         pygame.display.flip()
-        await asyncio.sleep(0)
+
+
+    
+    await asyncio.sleep(0)
     pygame.quit()
 asyncio.run(main())
