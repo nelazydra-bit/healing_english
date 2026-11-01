@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>healing_english</title>
+	<style>
+	/* giao diện*/
+	body{
+	        margin : 0;
+	        padding: 0;
+	        background-color: #213861;
+	        color:#ffffff
+	        font-family: 'seogoe UI',Tahomo ,geneva,Verdana,sans-serif;
+	        display: flex;
+	        justify-content: center;
+	        align-items: center;
+	        height:100vh
+    }
+	/*khung sảnh*/
+    .lobby-container{text-align: center;
+            background-color: #1a1a1e;
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2a2a30;
+	}
+    h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #00ff88; /* Màu xanh gaming */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p {
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+    /*Nút play*/
+    play-btn {
+            display: inline-block;
+            padding: 18px 60px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            background: linear-gradient(135deg, #00ff88, #00a8ff);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+            transition: all 0.2s ease;
+        }
+    /*hiệu ứng ấn1*/
+    .play-btn: hover {
+    	transform: scale(1,08);
+        box-shadow: 0 8px 25px rgba(0, 255, 136, 0.6);
+    }
+    /* hiệu ứng 2*/
+    .play-btn : active {
+    	transform: scale(0.98);
+    }
+	</style>
+</head>
+<body>
+ <div class="lobby-container">
+ 	<h1>Healing English</h1>
+ 	<a href=" http://127.0.0.1:5000.html" class="play-btn">Bắt đầu trò chơi</a>
+ </div>
+</body>
+</html>
