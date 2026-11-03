@@ -35,6 +35,12 @@ async def main():
     tree.set_colorkey((0,0,0))
     tree=pygame.transform.scale(tree,(SCREEN_WIDTH*1.2,SCREEN_HEIGHT-100))
     oject_x=0
+#âm thanh nền
+    pygame.mixer.music.load("bg_sound.flac")
+    pygame.mixer.music.play(-1)
+#âm thanh đáp án
+    False_sound=pygame.mixer.Sound("False_sound.flac")
+    True_sound=pygame.mixer.Sound("True_sound.flac")
 #hướng dẫn
     note1=pygame.image.load('note1.png').convert_alpha()
     note1.set_colorkey((0,0,0))
@@ -300,14 +306,18 @@ async def main():
 
     def choose_answer_duty2(answer,wrong,duty):
         if answer==0:
+            True_sound.play()
             duty+=2
         elif answer==1:
+            False_sound.play()
             screen.blit(wrong,(0,0))
         return duty
     def choose_answer2(answer,wrong,ques):
         if answer==1:
+            False_sound.play()
             screen.blit(wrong,(0,0))
         elif answer==0:
+            True_sound.play()
             ques+=1
         return ques
     ques=0
